@@ -34,6 +34,29 @@ router.get('/register', (req, res) => {
   `);
 });
 
+router.get('/dashboard', (req, res) => {
+    // Check if the user is authenticated (session has a userId)
+    if (req.session.userId) {
+      // Find the user by ID and retrieve the name and account balance
+      User.findById(req.session.userId).then((user) => {
+        if (user) {
+          // Render the dashboard page with user details
+          res.render('dashboard', { name: user.name, balance: user.account_balance });
+        } else {
+          // User not found, redirect to login page
+          res.redirect('/login');
+        }
+      }).catch((error) => {
+        console.log('Error finding user:', error);
+        res.redirect('/login');
+      });
+    } else {
+      // User is not logged in, redirect to login page
+      res.redirect('/login');
+    }
+  });
+  
+
 
 router.post('/register', (req, res) => {
     const { name, mobile, password } = req.body;
@@ -54,7 +77,7 @@ router.post('/register', (req, res) => {
         res.send('Mobile number already exists. Please choose a different mobile number.');
       } else {
         console.log('Error registering user:', error);
-        res.redirect('/auth/register');
+        res.redirect('/register');
       }
     });
   });

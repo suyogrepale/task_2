@@ -7,6 +7,20 @@
 <body>
   <h1>Welcome to the Dashboard, <%= name %></h1>
   <p>Account Balance: Rs. <%= balance %></p>
+
+  <h2>Deposit</h2>
+  <form method="POST" action="/auth/deposit">
+    <input type="number" name="amount" placeholder="Amount" /><br />
+    <button type="submit">Deposit</button>
+  </form>
+
+  <h2>Withdraw / Send To:</h2>
+  <form method="POST" action="/auth/withdraw">
+    <input type="number" name="amount" placeholder="Amount" /><br />
+    <input type="text" name="mobile" placeholder="Mobile Number" /><br />
+    <button type="submit">Withdraw</button>
+  </form>
+
   <a href="/auth/logout">Logout</a>
 </body>
 </html>
